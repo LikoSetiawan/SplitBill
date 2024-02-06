@@ -18,6 +18,7 @@ struct ContentView: View {
     
     let serviceTaxPercentages = [5, 6, 7, 10, 0]
     @State private var serviceTaxPercentage = 5
+//    @State private var useRedText = false
     
     var grantTotal : Double{
         let taxPercentage = Double(taxPercentage)
@@ -73,14 +74,21 @@ struct ContentView: View {
                 
                 Section("Service Tax"){
                     Picker("Tip Percentage", selection: $serviceTaxPercentage){
+                        
                         ForEach(serviceTaxPercentages, id: \.self){ tip in
                             Text(tip, format: .percent)
+                              
+                            
                         }
+//                        .foregroundStyle(useRedText ? .red : .blue)
                     }
+                    
                     .pickerStyle(.segmented)
                 }
                 Section("Total Harga Setelah Tax and service"){
                     Text(grantTotal,format: .currency(code: Locale.current.currency?.identifier ?? "JPY"))
+                    
+                        .foregroundStyle(serviceTaxPercentage == 0 ? .red : .black)
                 }
                 Section("Yang harus dibayar per orang ya") {
                         Text(totalPerPerson, format: .currency(code: Locale.current.currency?.identifier ?? "JPY"))
